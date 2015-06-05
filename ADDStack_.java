@@ -9,7 +9,6 @@ public class ADDStack_ implements PlugIn
 {
 	ImagePlus imp1;
 	ImagePlus imp2;
-	static boolean vertical;
 
 	public void run(String arg) 
 	{
