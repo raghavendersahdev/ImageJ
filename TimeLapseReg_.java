@@ -5,7 +5,7 @@ import ij.gui.*;
 import ij.io.ImageReader;
 import java.awt.*;
 import java.io.File;
-
+import java.util.*;
 
 public class TimeLapseReg_ implements PlugIn 
 {
@@ -64,6 +64,19 @@ public class TimeLapseReg_ implements PlugIn
 		
 		
 		return stack;		
+	}
+	//to be used in the transformThese function to iterate over the files
+	public ArrayList listFilesForFolder(final File folder) 
+	{
+	    ArrayList<String> arr = new ArrayList<String>();
+		for (final File fileEntry : folder.listFiles()) {
+	        if (fileEntry.isDirectory()) {
+	            listFilesForFolder(fileEntry);
+	        } else {
+	            System.out.println(fileEntry.getName());
+	        }
+	    }
+		return arr;
 	}
 	
 	// following function not required yet will be used later to input the transformation settings
