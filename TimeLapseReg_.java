@@ -10,13 +10,11 @@ import java.util.*;
 
 public class TimeLapseReg_ implements PlugIn 
 {
-	ImagePlus imp1;
-	ImagePlus imp2;
 
 	public void run(String arg) 
 	{
-		if (!showDialog())
-			return;
+		//if (!showDialog())
+		//	return;
 		//ImageStack stack1 = imp1.getStack();
 		//ImageStack stack2 = imp2.getStack();
 		ImageStack stack3 = null;
@@ -105,33 +103,7 @@ public class TimeLapseReg_ implements PlugIn
 	// following function not required yet will be used later to input the transformation settings
 	public boolean showDialog() 
 	{
-		int[] wList = WindowManager.getIDList();
-		if (wList==null || wList.length<2) 
-		{
-			error();
-			return false;
-		}
-		String[] titles = new String[wList.length];
-		for (int i=0; i<wList.length; i++) 
-		{
-			ImagePlus imp = WindowManager.getImage(wList[i]);
-			titles[i] = imp!=null?imp.getTitle():"";
-		}
-
-		GenericDialog gd = new GenericDialog("ADDStack_");
-		gd.addTextAreas("Enter File Path here", "", 1, 1);
-		gd.addChoice("Stack1:", titles, titles[0]);
-		gd.addChoice("Stack2:", titles, titles[1]);
-		gd.showDialog();
-		
-		if (gd.wasCanceled())
-			return false;
-		
-		int index1 = gd.getNextChoiceIndex();
-		int index2 = gd.getNextChoiceIndex();
-		
-		imp1 = WindowManager.getImage(wList[index1]);
-		imp2 = WindowManager.getImage(wList[index2]);
+		// code for inputing various parameters goes here
 		return true;
 	}
 	void error() 
