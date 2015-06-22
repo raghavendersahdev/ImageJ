@@ -11,9 +11,7 @@ import java.util.*;
 
 public class TimeLapseTranform_ implements PlugIn 
 {
-	ImagePlus imp1;
-	ImagePlus imp2;
-
+	
 	public void run(String arg) 
 	{
 		//if (!showDialog())
