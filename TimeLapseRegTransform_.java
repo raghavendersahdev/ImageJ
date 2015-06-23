@@ -9,15 +9,13 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 
-public class TimeLapseTranform_ implements PlugIn 
+public class TimeLapseRegTransform_ implements PlugIn 
 {
-	
+
 	public void run(String arg) 
 	{
 		//if (!showDialog())
 			//return;
-		//ImageStack stack1 = imp1.getStack();
-		//ImageStack stack2 = imp2.getStack();
 		ImageStack stack = null;
 		
 		try {
@@ -25,31 +23,25 @@ public class TimeLapseTranform_ implements PlugIn
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//imp1.changes = false;
-		//imp1.close();
-		//imp2.changes = false;
-		//imp2.close();
 		new ImagePlus("Aligned Stacks", stack).show();
-		IJ.register(TimeLapseTranform_.class);
+		IJ.register(TimeLapseRegTransform_.class);
 	}
 	public ImageStack transformThese()throws IOException
 	{
 		String directry = "D:\\dataset\\";
+		String path2 = "C:\\Users\\Raghavender Sahdev\\Desktop\\BITS\\GSoC2015\\ImageJ ICNF\\";
 		String reference_img = "D:\\dataset\\img0000.tif";
 		ImagePlus ip = new ImagePlus(reference_img);
 		FileInfo infoF = ip.getFileInfo();
 		
-		TurboReg_ reg = new TurboReg_();
 		
 		int width = infoF.width;
 		int height = infoF.height;
 		
 		//System.out.println(width+" width "+ height+" height" +infoF.url );
 		
-		String mark1 = "0 "+height/2+" ";
-		String mark2 = width/2+" " + height/2 +" ";
-		String mark3 = width +" "+ height/2 + " ";
-		FileReader transform = new FileReader("C:\\Users\\Raghavender Sahdev\\Desktop\\BITS\\GSoC2015\\ImageJ ICNF\\transformations.csv");
+		
+		FileReader transform = new FileReader(path2 + "transformations.csv");
 		BufferedReader br = new BufferedReader(transform);
 		
 		
@@ -60,7 +52,8 @@ public class TimeLapseTranform_ implements PlugIn
 		ArrayList<String> arr = listFilesForFolder(folder);
 		int n = arr.size();
 		String temp = br.readLine();
-		//declare a double array to read the transformations from the file transformations.txt
+		//declare a double array to read the transformations from the file transformations.csv
+		
 		double values[][] = new double[n][3]; // 3 for 2 translations and 1 rotation angle
 		for(int i=0 ; (temp = br.readLine()) != null ; i++)
 		{
@@ -78,11 +71,10 @@ public class TimeLapseTranform_ implements PlugIn
 		{
 			
 			ImagePlus ip2 = new ImagePlus(directry+arr.get(i));
-			FileInfo infoF2 = ip2.getFileInfo();
 			ImageProcessor ip3 = ip2.getProcessor();
-			ip3.rotate(values[i][2]);
 			ip3.translate(values[i][0], values[i][1]);
-
+			ip3.rotate(values[i][2]);
+			
 			System.out.println("Hello: "+(i+1));
 			stack.addSlice("image", ip2.getProcessor());
 		}
@@ -108,7 +100,13 @@ public class TimeLapseTranform_ implements PlugIn
 	// following function not required yet will be used later to input the transformation settings
 	public boolean showDialog() 
 	{
-		// code for inputing parameters goes here
+		GenericDialog gd = new GenericDialog("TimeLapseRegTransform_");
+		gd.showDialog();
+		
+		if (gd.wasCanceled())
+			return false;
+		
+		
 		return true;
 	}
 	void error() 
