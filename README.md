@@ -1,7 +1,10 @@
 # ImageJ
-ImageJ adding plugin for adding 2 stacks
 
-To run the plugin, open Image J and do one of the following:
+This project has 3 plugins namely in the following 3 files -
+1. TimeLapseRegAlign_.java
+2. TimeLapseRegTransform_.java
+3. TimeLapseRegSimulation_.java
 
-1. Simply go to Plugins menu and select *compile and run* and browse for the file **ADDStack_.java** and run the plugin
-2. Go to Plugins menu and click on *Install...* and select the file **ADDStack_.java** from there, you will see the plugin addedas ADDStack_ in the menu.
+The plugins are being used for aligning, registering and transforming medical image sequences.
+
+ADDStack_ plugin is just a sample plugin to add 2 stacks
